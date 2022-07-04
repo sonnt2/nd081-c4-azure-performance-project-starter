@@ -31,8 +31,8 @@ logger = logging.getLogger(__name__)
 config_integration.trace_integrations(['logging'])
 config_integration.trace_integrations(['requests'])
 # Standard Logging
-logger = logging.getLogger(__name__)
-handler = AzureLogHandler(connection_string='InstrumentationKey=84a7134d-43f0-446d-b0ae-0e43332c55cb')
+# logger = logging.getLogger(__name__)
+handler = AzureLogHandler(connection_string='InstrumentationKey=19c21626-a179-475e-976a-a4cab20f3eeb')
 logger.addHandler(handler)
 # Set the logging level
 logger.setLevel(logging.INFO)
@@ -43,14 +43,14 @@ stats = stats_module.stats
 view_manager = stats.view_manager
 exporter = metrics_exporter.new_metrics_exporter(
 enable_standard_metrics=True,
-connection_string='InstrumentationKey=84a7134d-43f0-446d-b0ae-0e43332c55cb')
+connection_string='InstrumentationKey=19c21626-a179-475e-976a-a4cab20f3eeb')
 view_manager.register_exporter(exporter)
 
 # Tracing
 # TODO: Setup tracer
 tracer = Tracer(
  exporter=AzureExporter(
-     connection_string='InstrumentationKey=84a7134d-43f0-446d-b0ae-0e43332c55cb'),
+     connection_string='InstrumentationKey=19c21626-a179-475e-976a-a4cab20f3eeb'),
  sampler=ProbabilitySampler(1.0),
 )
 
@@ -60,7 +60,7 @@ app = Flask(__name__)
 # Requests
 middleware = FlaskMiddleware(
  app,
- exporter=AzureExporter(connection_string="InstrumentationKey=84a7134d-43f0-446d-b0ae-0e43332c55cb"),
+ exporter=AzureExporter(connection_string="InstrumentationKey=19c21626-a179-475e-976a-a4cab20f3eeb"),
  sampler=ProbabilitySampler(rate=1.0)
 )
 
@@ -142,7 +142,7 @@ def index():
 
 if __name__ == "__main__":
     # TODO: Use the statement below when running locally
-    # app.run()
+    app.run()
     # TODO: Use the statement below before deployment to VMSS
     # app.run(host='0.0.0.0', threaded=True, debug=True) # remote
-    app.run(host='0.0.0.0', threaded=True, debug=True) # remote
+    # app.run(host='0.0.0.0', threaded=True, debug=True) # remotegit checkout -b Deploy_to_VMSS
